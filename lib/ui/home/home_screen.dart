@@ -81,11 +81,13 @@ class HomeScreen extends StatelessWidget {
                         delegate: PersonListSearchDelegate(people),
                       );
 
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return PersonScreen(id: result as int);
-                        },
-                      ));
+                      if (result != null && result is int) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return PersonScreen(id: result);
+                          },
+                        ));
+                      }
                     },
                   ),
                 ],
