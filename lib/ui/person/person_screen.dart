@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holder/model/note.dart';
 import 'package:holder/model/person.dart';
+import 'package:holder/ui/note/add_note_screen.dart';
 import 'package:holder/util/database.dart';
 import 'package:holder/util/locator.dart';
 
@@ -14,10 +15,6 @@ class PersonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    _noteDao.insert(Note(content: 'Hello World!', personId: id));
-    _noteDao.subscribeAllForUser(id).listen((event) {
-      print(event);
-    });
     return StreamBuilder<Person>(
       stream: _personDao.subscribe(id),
       builder: (context, snapshot) {
@@ -25,11 +22,6 @@ class PersonScreen extends StatelessWidget {
           final person = snapshot.data;
 
           return Scaffold(
-//            body: Column(
-//              children: <Widget>[
-//                Text(snapshot.data.toString()),
-//              ],
-//            ),
             body: CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
@@ -83,7 +75,13 @@ class PersonScreen extends StatelessWidget {
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return AddNoteScreen(personId: id);
+                  },
+                ));
+              },
               label: Text('Note'),
               icon: Icon(Icons.add),
             ),

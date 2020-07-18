@@ -1,9 +1,9 @@
 import 'dart:developer' as dev;
 
-extension LogX on Object {
+mixin LogMixin on Object {
   String get _type => this.runtimeType.toString();
 
-  void log(String message) {
-    dev.log(message, name: _type);
+  void log(dynamic message) {
+    dev.log(message.toString(), name: _type);
   }
 }

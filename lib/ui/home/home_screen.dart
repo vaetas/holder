@@ -4,6 +4,8 @@ import 'package:holder/bloc/person_list/bloc.dart';
 import 'package:holder/model/person.dart';
 import 'package:holder/ui/person/create_person_screen.dart';
 import 'package:holder/ui/person/person_screen.dart';
+import 'package:holder/util/database.dart';
+import 'package:holder/util/locator.dart';
 
 class PersonListSearchDelegate extends SearchDelegate {
   final List<Person> people;
@@ -113,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(CreatePersonScreen.route);
                 },
-                label: Text('Create'),
+                label: Text('Person'),
                 icon: Icon(Icons.add),
                 tooltip: 'Create new person',
               ),
