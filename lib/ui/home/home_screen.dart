@@ -44,6 +44,9 @@ class PersonListSearchDelegate extends SearchDelegate {
         final person = filtered[index];
         return ListTile(
           title: Text(person.firstName),
+          onTap: () {
+            close(context, person.id);
+          },
         );
       },
       itemCount: filtered.length,
@@ -72,11 +75,17 @@ class HomeScreen extends StatelessWidget {
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: () {
-                      showSearch(
+                    onPressed: () async {
+                      final result = await showSearch(
                         context: context,
                         delegate: PersonListSearchDelegate(people),
                       );
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) {
+                          return PersonScreen(id: result as int);
+                        },
+                      ));
                     },
                   ),
                 ],
