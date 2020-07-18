@@ -80,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `person` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `person` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `first_name` TEXT, `last_name` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -100,22 +100,31 @@ class _$PersonDao extends PersonDao {
         _personInsertionAdapter = InsertionAdapter(
             database,
             'person',
-            (Person item) =>
-                <String, dynamic>{'id': item.id, 'name': item.name},
+            (Person item) => <String, dynamic>{
+                  'id': item.id,
+                  'first_name': item.firstName,
+                  'last_name': item.lastName
+                },
             changeListener),
         _personUpdateAdapter = UpdateAdapter(
             database,
             'person',
             ['id'],
-            (Person item) =>
-                <String, dynamic>{'id': item.id, 'name': item.name},
+            (Person item) => <String, dynamic>{
+                  'id': item.id,
+                  'first_name': item.firstName,
+                  'last_name': item.lastName
+                },
             changeListener),
         _personDeletionAdapter = DeletionAdapter(
             database,
             'person',
             ['id'],
-            (Person item) =>
-                <String, dynamic>{'id': item.id, 'name': item.name},
+            (Person item) => <String, dynamic>{
+                  'id': item.id,
+                  'first_name': item.firstName,
+                  'last_name': item.lastName
+                },
             changeListener);
 
   final sqflite.DatabaseExecutor database;
@@ -124,8 +133,10 @@ class _$PersonDao extends PersonDao {
 
   final QueryAdapter _queryAdapter;
 
-  static final _personMapper = (Map<String, dynamic> row) =>
-      Person(id: row['id'] as int, name: row['name'] as String);
+  static final _personMapper = (Map<String, dynamic> row) => Person(
+      id: row['id'] as int,
+      firstName: row['first_name'] as String,
+      lastName: row['last_name'] as String);
 
   final InsertionAdapter<Person> _personInsertionAdapter;
 

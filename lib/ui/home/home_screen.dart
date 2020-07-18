@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holder/bloc/person_list/bloc.dart';
 import 'package:holder/model/person.dart';
-import 'package:holder/ui/person/create_person.dart';
+import 'package:holder/ui/person/create_person_screen.dart';
 import 'package:holder/ui/person/person_screen.dart';
 
 class PersonListSearchDelegate extends SearchDelegate {
@@ -36,14 +36,14 @@ class PersonListSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final filtered = people
-        .where((e) => e.name.toLowerCase().contains(query.toLowerCase()))
+        .where((e) => e.firstName.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return ListView.builder(
       itemBuilder: (context, index) {
         final person = filtered[index];
         return ListTile(
-          title: Text(person.name),
+          title: Text(person.firstName),
         );
       },
       itemCount: filtered.length,
@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                   final person = people[index];
 
                   return ListTile(
-                    title: Text(person.name),
+                    title: Text(person.fullName),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) {

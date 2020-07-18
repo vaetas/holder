@@ -5,21 +5,18 @@ class Person {
   @PrimaryKey(autoGenerate: true)
   final int id;
 
-  final String name;
+  @ColumnInfo(name: 'first_name')
+  final String firstName;
 
-  Person({this.id, this.name});
+  @ColumnInfo(name: 'last_name')
+  final String lastName;
 
-  @override
-  String toString() => 'Person{id: $id, name: $name}';
+  Person({this.id, this.firstName, this.lastName});
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Person &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          name == other.name;
+  String get fullName => '$firstName $lastName';
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode;
+  String toString() {
+    return 'Person{id: $id, firstName: $firstName, lastName: $lastName}';
+  }
 }

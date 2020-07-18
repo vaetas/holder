@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holder/bloc/bloc_app.dart';
 import 'package:holder/ui/home/home_screen.dart';
-import 'package:holder/ui/person/create_person.dart';
+import 'package:holder/ui/person/create_person_screen.dart';
 import 'package:holder/util/locator.dart';
 
 Future<void> main() async {
