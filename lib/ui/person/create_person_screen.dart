@@ -55,6 +55,9 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
                 ),
               );
             },
+            success: () {
+              Navigator.of(context).pop();
+            },
             orElse: () {},
           );
         },
@@ -68,12 +71,20 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
                   decoration: InputDecoration(
                     labelText: 'First name',
                   ),
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () {
+                    FocusScope.of(context).nextFocus();
+                  },
+                  textCapitalization: TextCapitalization.words,
                 ),
                 TextField(
                   controller: lastNameController,
                   decoration: InputDecoration(
                     labelText: 'Last name',
                   ),
+                  textInputAction: TextInputAction.done,
+                  onEditingComplete: submit,
+                  textCapitalization: TextCapitalization.words,
                 ),
               ],
             ),
