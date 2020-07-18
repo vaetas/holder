@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:holder/bloc/bloc_app.dart';
 import 'package:holder/ui/home/home_screen.dart';
+import 'package:holder/ui/person/create_person.dart';
+import 'package:holder/util/locator.dart';
 
-void main() => runApp(HolderApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupDependencies();
+  runApp(HolderApp());
+}
 
 class HolderApp extends StatelessWidget {
   @override
@@ -12,6 +18,7 @@ class HolderApp extends StatelessWidget {
         home: HomeScreen(),
         routes: {
           HomeScreen.route: (_) => HomeScreen(),
+          CreatePersonScreen.route: (_) => CreatePersonScreen(),
         },
       ),
     );
