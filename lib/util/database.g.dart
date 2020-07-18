@@ -62,6 +62,8 @@ class _$AppDatabase extends AppDatabase {
 
   PersonDao _personDaoInstance;
 
+  NoteDao _noteDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -81,6 +83,8 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `person` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `first_name` TEXT, `last_name` TEXT)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `note` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `content` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -91,6 +95,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   PersonDao get personDao {
     return _personDaoInstance ??= _$PersonDao(database, changeListener);
+  }
+
+  @override
+  NoteDao get noteDao {
+    return _noteDaoInstance ??= _$NoteDao(database, changeListener);
   }
 }
 
@@ -145,12 +154,6 @@ class _$PersonDao extends PersonDao {
   final DeletionAdapter<Person> _personDeletionAdapter;
 
   @override
-  Stream<List<Person>> subscribeAll() {
-    return _queryAdapter.queryListStream('SELECT * FROM person',
-        queryableName: 'person', isView: false, mapper: _personMapper);
-  }
-
-  @override
   Stream<Person> subscribe(int id) {
     return _queryAdapter.queryStream('SELECT * FROM person WHERE id = ?',
         arguments: <dynamic>[id],
@@ -160,18 +163,116 @@ class _$PersonDao extends PersonDao {
   }
 
   @override
-  Future<int> insert(Person person) {
+  Stream<List<Person>> subscribeAll() {
+    return _queryAdapter.queryListStream('SELECT * FROM person',
+        queryableName: 'person', isView: false, mapper: _personMapper);
+  }
+
+  @override
+  Future<int> insert(Person object) {
     return _personInsertionAdapter.insertAndReturnId(
-        person, OnConflictStrategy.abort);
+        object, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> update(Person person) async {
-    await _personUpdateAdapter.update(person, OnConflictStrategy.abort);
+  Future<void> update(Person object) async {
+    await _personUpdateAdapter.update(object, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> delete(Person person) async {
-    await _personDeletionAdapter.delete(person);
+  Future<void> delete(Person object) async {
+    await _personDeletionAdapter.delete(object);
+  }
+}
+
+class _$NoteDao extends NoteDao {
+  _$NoteDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database, changeListener),
+        _noteInsertionAdapter = InsertionAdapter(
+            database,
+            'note',
+            (Note item) => <String, dynamic>{
+                  'id': item.id,
+                  'person_id': item.personId,
+                  'content': item.content
+                },
+            changeListener),
+        _noteUpdateAdapter = UpdateAdapter(
+            database,
+            'note',
+            ['id'],
+            (Note item) => <String, dynamic>{
+                  'id': item.id,
+                  'person_id': item.personId,
+                  'content': item.content
+                },
+            changeListener),
+        _noteDeletionAdapter = DeletionAdapter(
+            database,
+            'note',
+            ['id'],
+            (Note item) => <String, dynamic>{
+                  'id': item.id,
+                  'person_id': item.personId,
+                  'content': item.content
+                },
+            changeListener);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  static final _noteMapper = (Map<String, dynamic> row) => Note(
+      id: row['id'] as int,
+      personId: row['person_id'] as int,
+      content: row['content'] as String);
+
+  final InsertionAdapter<Note> _noteInsertionAdapter;
+
+  final UpdateAdapter<Note> _noteUpdateAdapter;
+
+  final DeletionAdapter<Note> _noteDeletionAdapter;
+
+  @override
+  Stream<Note> subscribe(int id) {
+    return _queryAdapter.queryStream('SELECT * FROM note WHERE id = ?',
+        arguments: <dynamic>[id],
+        queryableName: 'note',
+        isView: false,
+        mapper: _noteMapper);
+  }
+
+  @override
+  Stream<List<Note>> subscribeAll() {
+    return _queryAdapter.queryListStream('SELECT * FROM note',
+        queryableName: 'note', isView: false, mapper: _noteMapper);
+  }
+
+  @override
+  Stream<List<Note>> subscribeAllForUser(int userId) {
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM note WHERE person_id = ?',
+        arguments: <dynamic>[userId],
+        queryableName: 'note',
+        isView: false,
+        mapper: _noteMapper);
+  }
+
+  @override
+  Future<int> insert(Note object) {
+    return _noteInsertionAdapter.insertAndReturnId(
+        object, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> update(Note object) async {
+    await _noteUpdateAdapter.update(object, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> delete(Note object) async {
+    await _noteDeletionAdapter.delete(object);
   }
 }
