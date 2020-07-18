@@ -13,10 +13,12 @@ class _$CreatePersonEventTearOff {
   const _$CreatePersonEventTearOff();
 
 // ignore: unused_element
-  _CreatePersonEventSaved saved({String firstName, String lastName}) {
+  _CreatePersonEventSaved saved(
+      {String firstName, String lastName, String description}) {
     return _CreatePersonEventSaved(
       firstName: firstName,
       lastName: lastName,
+      description: description,
     );
   }
 }
@@ -27,14 +29,16 @@ const $CreatePersonEvent = _$CreatePersonEventTearOff();
 mixin _$CreatePersonEvent {
   String get firstName;
   String get lastName;
+  String get description;
 
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result saved(String firstName, String lastName),
+    @required
+        Result saved(String firstName, String lastName, String description),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result saved(String firstName, String lastName),
+    Result saved(String firstName, String lastName, String description),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -54,7 +58,7 @@ abstract class $CreatePersonEventCopyWith<$Res> {
   factory $CreatePersonEventCopyWith(
           CreatePersonEvent value, $Res Function(CreatePersonEvent) then) =
       _$CreatePersonEventCopyWithImpl<$Res>;
-  $Res call({String firstName, String lastName});
+  $Res call({String firstName, String lastName, String description});
 }
 
 class _$CreatePersonEventCopyWithImpl<$Res>
@@ -69,10 +73,13 @@ class _$CreatePersonEventCopyWithImpl<$Res>
   $Res call({
     Object firstName = freezed,
     Object lastName = freezed,
+    Object description = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: firstName == freezed ? _value.firstName : firstName as String,
       lastName: lastName == freezed ? _value.lastName : lastName as String,
+      description:
+          description == freezed ? _value.description : description as String,
     ));
   }
 }
@@ -83,7 +90,7 @@ abstract class _$CreatePersonEventSavedCopyWith<$Res>
           $Res Function(_CreatePersonEventSaved) then) =
       __$CreatePersonEventSavedCopyWithImpl<$Res>;
   @override
-  $Res call({String firstName, String lastName});
+  $Res call({String firstName, String lastName, String description});
 }
 
 class __$CreatePersonEventSavedCopyWithImpl<$Res>
@@ -100,10 +107,13 @@ class __$CreatePersonEventSavedCopyWithImpl<$Res>
   $Res call({
     Object firstName = freezed,
     Object lastName = freezed,
+    Object description = freezed,
   }) {
     return _then(_CreatePersonEventSaved(
       firstName: firstName == freezed ? _value.firstName : firstName as String,
       lastName: lastName == freezed ? _value.lastName : lastName as String,
+      description:
+          description == freezed ? _value.description : description as String,
     ));
   }
 }
@@ -111,16 +121,19 @@ class __$CreatePersonEventSavedCopyWithImpl<$Res>
 class _$_CreatePersonEventSaved
     with DiagnosticableTreeMixin
     implements _CreatePersonEventSaved {
-  const _$_CreatePersonEventSaved({this.firstName, this.lastName});
+  const _$_CreatePersonEventSaved(
+      {this.firstName, this.lastName, this.description});
 
   @override
   final String firstName;
   @override
   final String lastName;
+  @override
+  final String description;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreatePersonEvent.saved(firstName: $firstName, lastName: $lastName)';
+    return 'CreatePersonEvent.saved(firstName: $firstName, lastName: $lastName, description: $description)';
   }
 
   @override
@@ -129,7 +142,8 @@ class _$_CreatePersonEventSaved
     properties
       ..add(DiagnosticsProperty('type', 'CreatePersonEvent.saved'))
       ..add(DiagnosticsProperty('firstName', firstName))
-      ..add(DiagnosticsProperty('lastName', lastName));
+      ..add(DiagnosticsProperty('lastName', lastName))
+      ..add(DiagnosticsProperty('description', description));
   }
 
   @override
@@ -141,14 +155,18 @@ class _$_CreatePersonEventSaved
                     .equals(other.firstName, firstName)) &&
             (identical(other.lastName, lastName) ||
                 const DeepCollectionEquality()
-                    .equals(other.lastName, lastName)));
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(firstName) ^
-      const DeepCollectionEquality().hash(lastName);
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(description);
 
   @override
   _$CreatePersonEventSavedCopyWith<_CreatePersonEventSaved> get copyWith =>
@@ -158,21 +176,22 @@ class _$_CreatePersonEventSaved
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result saved(String firstName, String lastName),
+    @required
+        Result saved(String firstName, String lastName, String description),
   }) {
     assert(saved != null);
-    return saved(firstName, lastName);
+    return saved(firstName, lastName, description);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result saved(String firstName, String lastName),
+    Result saved(String firstName, String lastName, String description),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (saved != null) {
-      return saved(firstName, lastName);
+      return saved(firstName, lastName, description);
     }
     return orElse();
   }
@@ -201,13 +220,17 @@ class _$_CreatePersonEventSaved
 }
 
 abstract class _CreatePersonEventSaved implements CreatePersonEvent {
-  const factory _CreatePersonEventSaved({String firstName, String lastName}) =
-      _$_CreatePersonEventSaved;
+  const factory _CreatePersonEventSaved(
+      {String firstName,
+      String lastName,
+      String description}) = _$_CreatePersonEventSaved;
 
   @override
   String get firstName;
   @override
   String get lastName;
+  @override
+  String get description;
   @override
   _$CreatePersonEventSavedCopyWith<_CreatePersonEventSaved> get copyWith;
 }

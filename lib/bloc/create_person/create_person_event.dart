@@ -8,5 +8,6 @@ abstract class CreatePersonEvent with _$CreatePersonEvent {
   const factory CreatePersonEvent.saved({
     String firstName,
     String lastName,
+    String description,
   }) = _CreatePersonEventSaved;
 }

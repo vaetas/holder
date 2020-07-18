@@ -22,23 +22,27 @@ class CreatePersonBloc extends Bloc<CreatePersonEvent, CreatePersonState> {
   Stream<CreatePersonState> _mapSaved(
     String firstName,
     String lastName,
+    String description,
   ) async* {
     final _firstName = firstName.trim();
-    if (firstName == null || _firstName.isEmpty) {
+    if (_firstName.isEmpty) {
       yield const CreatePersonState.error('First name cannot be empty');
       return;
     }
 
     final _lastName = lastName.trim();
-    if (lastName == null || _lastName.isEmpty) {
+    if (_lastName.isEmpty) {
       yield const CreatePersonState.error('Last name cannot be empty');
     }
+
+    final _description = description.trim();
 
     try {
       yield const CreatePersonState.inProgress();
       final person = Person(
         firstName: _firstName,
         lastName: _lastName,
+        description: _description,
       );
       await _personDao.insert(person);
       yield const CreatePersonState.success();
