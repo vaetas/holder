@@ -8,22 +8,35 @@ class PersonScreen extends StatelessWidget {
 
   PersonScreen({this.id});
 
-  final _database = locator<AppDatabase>();
+  final _personDao = locator<AppDatabase>().personDao;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: StreamBuilder<Person>(
-        stream: _database.personDao.subscribe(id),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data.toString());
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+    return StreamBuilder<Person>(
+      stream: _personDao.subscribe(id),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Scaffold(
+            appBar: AppBar(
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  tooltip: 'Delete',
+                  onPressed: () async {
+                    await _personDao.delete(snapshot.data);
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+            body: Text(snapshot.data.toString()),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
