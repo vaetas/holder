@@ -36,14 +36,14 @@ class PersonListSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final filtered = people
-        .where((e) => e.firstName.toLowerCase().contains(query.toLowerCase()))
+        .where((e) => e.fullName.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return ListView.builder(
       itemBuilder: (context, index) {
         final person = filtered[index];
         return ListTile(
-          title: Text(person.firstName),
+          title: Text(person.fullName),
           onTap: () {
             close(context, person.id);
           },
