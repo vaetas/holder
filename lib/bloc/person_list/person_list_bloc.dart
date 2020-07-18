@@ -12,7 +12,7 @@ class PersonListBloc extends Bloc<PersonListEvent, PersonListState> {
   final _database = locator<AppDatabase>();
 
   PersonListBloc() : super(const PersonListState.initial()) {
-    _database.personDao.getAll().listen((event) {
+    _database.personDao.subscribeAll().listen((event) {
       this.add(PersonListEvent.updated(event));
     });
   }
@@ -25,7 +25,7 @@ class PersonListBloc extends Bloc<PersonListEvent, PersonListState> {
   }
 
   Stream<PersonListState> _mapUpdate(List<Person> people) async* {
-    yield PersonListState.success(people: people.map((e) => e.name).toList());
+    yield PersonListState.success(people: people);
   }
 
   @override

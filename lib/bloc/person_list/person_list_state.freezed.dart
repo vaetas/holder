@@ -18,7 +18,7 @@ class _$PersonListStateTearOff {
   }
 
 // ignore: unused_element
-  _PersonListStateSuccess success({List<String> people}) {
+  _PersonListStateSuccess success({List<Person> people}) {
     return _PersonListStateSuccess(
       people: people,
     );
@@ -32,12 +32,12 @@ mixin _$PersonListState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(List<String> people),
+    @required Result success(List<Person> people),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(List<String> people),
+    Result success(List<Person> people),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -113,7 +113,7 @@ class _$_PersonListStateInitial
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(List<String> people),
+    @required Result success(List<Person> people),
   }) {
     assert(initial != null);
     assert(success != null);
@@ -124,7 +124,7 @@ class _$_PersonListStateInitial
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(List<String> people),
+    Result success(List<Person> people),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -168,7 +168,7 @@ abstract class _$PersonListStateSuccessCopyWith<$Res> {
   factory _$PersonListStateSuccessCopyWith(_PersonListStateSuccess value,
           $Res Function(_PersonListStateSuccess) then) =
       __$PersonListStateSuccessCopyWithImpl<$Res>;
-  $Res call({List<String> people});
+  $Res call({List<Person> people});
 }
 
 class __$PersonListStateSuccessCopyWithImpl<$Res>
@@ -186,7 +186,7 @@ class __$PersonListStateSuccessCopyWithImpl<$Res>
     Object people = freezed,
   }) {
     return _then(_PersonListStateSuccess(
-      people: people == freezed ? _value.people : people as List<String>,
+      people: people == freezed ? _value.people : people as List<Person>,
     ));
   }
 }
@@ -197,7 +197,7 @@ class _$_PersonListStateSuccess
   const _$_PersonListStateSuccess({this.people});
 
   @override
-  final List<String> people;
+  final List<Person> people;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -233,7 +233,7 @@ class _$_PersonListStateSuccess
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(List<String> people),
+    @required Result success(List<Person> people),
   }) {
     assert(initial != null);
     assert(success != null);
@@ -244,7 +244,7 @@ class _$_PersonListStateSuccess
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(List<String> people),
+    Result success(List<Person> people),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -281,9 +281,9 @@ class _$_PersonListStateSuccess
 }
 
 abstract class _PersonListStateSuccess implements PersonListState {
-  const factory _PersonListStateSuccess({List<String> people}) =
+  const factory _PersonListStateSuccess({List<Person> people}) =
       _$_PersonListStateSuccess;
 
-  List<String> get people;
+  List<Person> get people;
   _$PersonListStateSuccessCopyWith<_PersonListStateSuccess> get copyWith;
 }

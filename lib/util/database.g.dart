@@ -103,6 +103,13 @@ class _$PersonDao extends PersonDao {
             (Person item) =>
                 <String, dynamic>{'id': item.id, 'name': item.name},
             changeListener),
+        _personUpdateAdapter = UpdateAdapter(
+            database,
+            'person',
+            ['id'],
+            (Person item) =>
+                <String, dynamic>{'id': item.id, 'name': item.name},
+            changeListener),
         _personDeletionAdapter = DeletionAdapter(
             database,
             'person',
@@ -122,22 +129,38 @@ class _$PersonDao extends PersonDao {
 
   final InsertionAdapter<Person> _personInsertionAdapter;
 
+  final UpdateAdapter<Person> _personUpdateAdapter;
+
   final DeletionAdapter<Person> _personDeletionAdapter;
 
   @override
-  Stream<List<Person>> getAll() {
+  Stream<List<Person>> subscribeAll() {
     return _queryAdapter.queryListStream('SELECT * FROM person',
         queryableName: 'person', isView: false, mapper: _personMapper);
   }
 
   @override
-  Future<int> add(Person person) {
+  Stream<Person> subscribe(int id) {
+    return _queryAdapter.queryStream('SELECT * FROM person WHERE id = ?',
+        arguments: <dynamic>[id],
+        queryableName: 'person',
+        isView: false,
+        mapper: _personMapper);
+  }
+
+  @override
+  Future<int> insert(Person person) {
     return _personInsertionAdapter.insertAndReturnId(
         person, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> remove(Person person) async {
+  Future<void> update(Person person) async {
+    await _personUpdateAdapter.update(person, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> delete(Person person) async {
     await _personDeletionAdapter.delete(person);
   }
 }

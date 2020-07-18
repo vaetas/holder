@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:holder/model/person.dart';
 
 part 'person_list_state.freezed.dart';
 
@@ -8,6 +9,6 @@ abstract class PersonListState with _$PersonListState {
   const factory PersonListState.initial() = _PersonListStateInitial;
 
   const factory PersonListState.success({
-    List<String> people,
+    List<Person> people,
   }) = _PersonListStateSuccess;
 }
