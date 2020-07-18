@@ -16,6 +16,7 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
       CreatePersonEvent.saved(
         firstName: firstNameController.text,
         lastName: lastNameController.text,
+        description: descriptionController.text,
       ),
     );
   }
@@ -81,6 +83,15 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
                   controller: lastNameController,
                   decoration: InputDecoration(
                     labelText: 'Last name',
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: submit,
+                  textCapitalization: TextCapitalization.words,
+                ),
+                TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Description',
                   ),
                   textInputAction: TextInputAction.done,
                   onEditingComplete: submit,

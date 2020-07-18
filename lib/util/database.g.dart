@@ -82,7 +82,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `person` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `first_name` TEXT, `last_name` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `person` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `first_name` TEXT, `last_name` TEXT, `description` TEXT)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `note` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `content` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
@@ -112,7 +112,8 @@ class _$PersonDao extends PersonDao {
             (Person item) => <String, dynamic>{
                   'id': item.id,
                   'first_name': item.firstName,
-                  'last_name': item.lastName
+                  'last_name': item.lastName,
+                  'description': item.description
                 },
             changeListener),
         _personUpdateAdapter = UpdateAdapter(
@@ -122,7 +123,8 @@ class _$PersonDao extends PersonDao {
             (Person item) => <String, dynamic>{
                   'id': item.id,
                   'first_name': item.firstName,
-                  'last_name': item.lastName
+                  'last_name': item.lastName,
+                  'description': item.description
                 },
             changeListener),
         _personDeletionAdapter = DeletionAdapter(
@@ -132,7 +134,8 @@ class _$PersonDao extends PersonDao {
             (Person item) => <String, dynamic>{
                   'id': item.id,
                   'first_name': item.firstName,
-                  'last_name': item.lastName
+                  'last_name': item.lastName,
+                  'description': item.description
                 },
             changeListener);
 
@@ -145,7 +148,8 @@ class _$PersonDao extends PersonDao {
   static final _personMapper = (Map<String, dynamic> row) => Person(
       id: row['id'] as int,
       firstName: row['first_name'] as String,
-      lastName: row['last_name'] as String);
+      lastName: row['last_name'] as String,
+      description: row['description'] as String);
 
   final InsertionAdapter<Person> _personInsertionAdapter;
 

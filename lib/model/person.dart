@@ -11,12 +11,14 @@ class Person {
   @ColumnInfo(name: 'last_name')
   final String lastName;
 
-  Person({this.id, this.firstName, this.lastName});
+  final String description;
+
+  Person({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.description,
+  });
 
   String get fullName => '$firstName $lastName';
-
-  @override
-  String toString() {
-    return 'Person{id: $id, firstName: $firstName, lastName: $lastName}';
-  }
 }

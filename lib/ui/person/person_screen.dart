@@ -4,8 +4,9 @@ import 'package:holder/model/person.dart';
 import 'package:holder/ui/note/add_note_screen.dart';
 import 'package:holder/util/database.dart';
 import 'package:holder/util/locator.dart';
+import 'package:holder/util/log.dart';
 
-class PersonScreen extends StatelessWidget {
+class PersonScreen extends StatelessWidget with LogMixin {
   final int id;
 
   PersonScreen({this.id});
@@ -25,13 +26,24 @@ class PersonScreen extends StatelessWidget {
             body: CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
+                  expandedHeight: 125,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(person.fullName),
+                    centerTitle: false,
+                  ),
+                  pinned: true,
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(Icons.delete),
                       tooltip: 'Delete',
                       onPressed: () async {
-                        await _personDao.delete(snapshot.data);
-                        Navigator.of(context).pop();
+                        // TODO: Move to [PersonBloc]
+                        try {
+                          await _personDao.delete(snapshot.data);
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          log('Error', error: e);
+                        }
                       },
                     ),
                   ],
@@ -41,12 +53,7 @@ class PersonScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          person.fullName,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ],
+                      children: <Widget>[],
                     ),
                   ),
                 ),

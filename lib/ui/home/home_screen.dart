@@ -4,8 +4,7 @@ import 'package:holder/bloc/person_list/bloc.dart';
 import 'package:holder/model/person.dart';
 import 'package:holder/ui/person/create_person_screen.dart';
 import 'package:holder/ui/person/person_screen.dart';
-import 'package:holder/util/database.dart';
-import 'package:holder/util/locator.dart';
+import 'package:holder/ui/person/person_tile.dart';
 
 class PersonListSearchDelegate extends SearchDelegate {
   final List<Person> people;
@@ -96,17 +95,8 @@ class HomeScreen extends StatelessWidget {
               ),
               body: ListView.builder(
                 itemBuilder: (context, index) {
-                  final person = people[index];
-
-                  return ListTile(
-                    title: Text(person.fullName),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return PersonScreen(id: person.id);
-                        },
-                      ));
-                    },
+                  return PersonTile(
+                    person: people[index],
                   );
                 },
                 itemCount: people.length,
