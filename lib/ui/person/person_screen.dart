@@ -6,6 +6,10 @@ import 'package:holder/util/database.dart';
 import 'package:holder/util/locator.dart';
 import 'package:holder/util/log.dart';
 
+enum _PersonScreenPopupItem {
+  delete,
+}
+
 class PersonScreen extends StatelessWidget with LogMixin {
   final int id;
 
@@ -13,6 +17,18 @@ class PersonScreen extends StatelessWidget with LogMixin {
 
   final _personDao = locator<AppDatabase>().personDao;
   final _noteDao = locator<AppDatabase>().noteDao;
+
+  Future<bool> delete(Person person) async {
+    // TODO: Move to [PersonBloc]
+    try {
+      await _personDao.delete(person);
+      return true;
+    } catch (e) {
+      log('Error', error: e);
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,29 +49,27 @@ class PersonScreen extends StatelessWidget with LogMixin {
                   ),
                   pinned: true,
                   actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      tooltip: 'Delete',
-                      onPressed: () async {
-                        // TODO: Move to [PersonBloc]
-                        try {
-                          await _personDao.delete(snapshot.data);
-                          Navigator.of(context).pop();
-                        } catch (e) {
-                          log('Error', error: e);
+                    PopupMenuButton<_PersonScreenPopupItem>(
+                      onSelected: (item) async {
+                        switch (item) {
+                          case _PersonScreenPopupItem.delete:
+                            final success = await delete(person);
+                            if (success) {
+                              Navigator.of(context).pop();
+                            }
+                            break;
                         }
+                      },
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem<_PersonScreenPopupItem>(
+                            child: Text('Delete'),
+                            value: _PersonScreenPopupItem.delete,
+                          ),
+                        ];
                       },
                     ),
                   ],
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[],
-                    ),
-                  ),
                 ),
                 StreamBuilder<List<Note>>(
                   stream: _noteDao.subscribeAllForUser(id),
