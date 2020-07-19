@@ -30,7 +30,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> {
   }
 
   Stream<PersonState> _mapPersonLoaded(Person person) async* {
-    yield* state.map(
+    yield* state.maybeMap(
       initial: (_) async* {
         yield PersonState.success(
           person: person,
@@ -42,15 +42,16 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> {
           person: person,
         );
       },
+      orElse: () async* {},
     );
   }
 
   Stream<PersonState> _mapNotesLoaded(List<Note> notes) async* {
-    yield* state.map(
+    yield* state.maybeMap(
       initial: (_) async* {
         yield PersonState.success();
       },
-      success: (value) async* {},
+      orElse: () async* {},
     );
   }
 }

@@ -19,14 +19,36 @@ class Date {
   @ColumnInfo(name: 'person_id')
   final int personId;
 
+  final String name;
+
   @ColumnInfo(name: 'date')
-  String dateIso8601;
+  final String dateIso8601;
 
   DateTime get date => DateTime.parse(dateIso8601);
 
   Date({
     this.id,
     @required this.personId,
+    @required this.name,
     @required this.dateIso8601,
   });
+
+  @override
+  String toString() {
+    return 'Date{id: $id, personId: $personId, name: $name, dateIso8601: $dateIso8601}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Date &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          personId == other.personId &&
+          name == other.name &&
+          dateIso8601 == other.dateIso8601;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^ personId.hashCode ^ name.hashCode ^ dateIso8601.hashCode;
 }

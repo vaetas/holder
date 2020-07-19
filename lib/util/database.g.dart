@@ -88,7 +88,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `note` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `content` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `date` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `date` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
+            'CREATE TABLE IF NOT EXISTS `date` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `name` TEXT, `date` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -299,6 +299,7 @@ class _$DateDao extends DateDao {
             (Date item) => <String, dynamic>{
                   'id': item.id,
                   'person_id': item.personId,
+                  'name': item.name,
                   'date': item.dateIso8601
                 },
             changeListener),
@@ -309,6 +310,7 @@ class _$DateDao extends DateDao {
             (Date item) => <String, dynamic>{
                   'id': item.id,
                   'person_id': item.personId,
+                  'name': item.name,
                   'date': item.dateIso8601
                 },
             changeListener),
@@ -319,6 +321,7 @@ class _$DateDao extends DateDao {
             (Date item) => <String, dynamic>{
                   'id': item.id,
                   'person_id': item.personId,
+                  'name': item.name,
                   'date': item.dateIso8601
                 },
             changeListener);
@@ -332,6 +335,7 @@ class _$DateDao extends DateDao {
   static final _dateMapper = (Map<String, dynamic> row) => Date(
       id: row['id'] as int,
       personId: row['person_id'] as int,
+      name: row['name'] as String,
       dateIso8601: row['date'] as String);
 
   final InsertionAdapter<Date> _dateInsertionAdapter;

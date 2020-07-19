@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:holder/dao/date_dao.dart';
+import 'package:holder/dao/note_dao.dart';
+import 'package:holder/dao/person_dao.dart';
+import 'package:holder/model/date.dart';
 import 'package:holder/model/note.dart';
 import 'package:holder/model/person.dart';
+import 'package:holder/ui/date/add_date_screen.dart';
+import 'package:holder/ui/date/date_tile.dart';
 import 'package:holder/ui/note/add_note_screen.dart';
-import 'package:holder/util/database.dart';
-import 'package:holder/util/locator.dart';
 import 'package:holder/util/log.dart';
 
 enum _PersonScreenPopupItem {
   delete,
 }
 
-class PersonScreen extends StatelessWidget with LogMixin {
+class PersonScreen extends StatelessWidget
+    with LogMixin, PersonDaoMixin, NoteDaoMixin, DateDaoMixin {
   final int id;
 
   PersonScreen({this.id});
 
-  final _personDao = locator<AppDatabase>().personDao;
-  final _noteDao = locator<AppDatabase>().noteDao;
-
   Future<bool> delete(Person person) async {
     // TODO: Move to [PersonBloc]
     try {
-      await _personDao.delete(person);
+      await personDao.delete(person);
       return true;
     } catch (e) {
       log('Error', error: e);
@@ -33,7 +35,7 @@ class PersonScreen extends StatelessWidget with LogMixin {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Person>(
-      stream: _personDao.subscribe(id),
+      stream: personDao.subscribe(id),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final person = snapshot.data;
@@ -71,8 +73,38 @@ class PersonScreen extends StatelessWidget with LogMixin {
                     ),
                   ],
                 ),
+                SliverToBoxAdapter(
+                  child: StreamBuilder<List<Date>>(
+                    stream: dateDao.subscribeAllForUser(id),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final items = <Widget>[];
+                        snapshot.data.forEach((element) {
+                          items.add(DateTile(date: element));
+                        });
+                        items.add(FlatButton.icon(
+                          icon: Icon(Icons.add),
+                          label: Text('Important Date'),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddDateScreen(
+                                personId: person.id,
+                              ),
+                            ));
+                          },
+                        ));
+
+                        return Column(
+                          children: items,
+                        );
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ),
                 StreamBuilder<List<Note>>(
-                  stream: _noteDao.subscribeAllForUser(id),
+                  stream: noteDao.subscribeAllForUser(id),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return SliverList(
