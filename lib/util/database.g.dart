@@ -64,6 +64,8 @@ class _$AppDatabase extends AppDatabase {
 
   NoteDao _noteDaoInstance;
 
+  DateDao _dateDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -85,6 +87,8 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `person` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `first_name` TEXT, `last_name` TEXT, `description` TEXT)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `note` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `content` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `date` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `person_id` INTEGER, `date` TEXT, FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -100,6 +104,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   NoteDao get noteDao {
     return _noteDaoInstance ??= _$NoteDao(database, changeListener);
+  }
+
+  @override
+  DateDao get dateDao {
+    return _dateDaoInstance ??= _$DateDao(database, changeListener);
   }
 }
 
@@ -255,10 +264,10 @@ class _$NoteDao extends NoteDao {
   }
 
   @override
-  Stream<List<Note>> subscribeAllForUser(int userId) {
+  Stream<List<Note>> subscribeAllForUser(int personId) {
     return _queryAdapter.queryListStream(
         'SELECT * FROM note WHERE person_id = ?',
-        arguments: <dynamic>[userId],
+        arguments: <dynamic>[personId],
         queryableName: 'note',
         isView: false,
         mapper: _noteMapper);
@@ -278,5 +287,97 @@ class _$NoteDao extends NoteDao {
   @override
   Future<void> delete(Note object) async {
     await _noteDeletionAdapter.delete(object);
+  }
+}
+
+class _$DateDao extends DateDao {
+  _$DateDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database, changeListener),
+        _dateInsertionAdapter = InsertionAdapter(
+            database,
+            'date',
+            (Date item) => <String, dynamic>{
+                  'id': item.id,
+                  'person_id': item.personId,
+                  'date': item.dateIso8601
+                },
+            changeListener),
+        _dateUpdateAdapter = UpdateAdapter(
+            database,
+            'date',
+            ['id'],
+            (Date item) => <String, dynamic>{
+                  'id': item.id,
+                  'person_id': item.personId,
+                  'date': item.dateIso8601
+                },
+            changeListener),
+        _dateDeletionAdapter = DeletionAdapter(
+            database,
+            'date',
+            ['id'],
+            (Date item) => <String, dynamic>{
+                  'id': item.id,
+                  'person_id': item.personId,
+                  'date': item.dateIso8601
+                },
+            changeListener);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  static final _dateMapper = (Map<String, dynamic> row) => Date(
+      id: row['id'] as int,
+      personId: row['person_id'] as int,
+      dateIso8601: row['date'] as String);
+
+  final InsertionAdapter<Date> _dateInsertionAdapter;
+
+  final UpdateAdapter<Date> _dateUpdateAdapter;
+
+  final DeletionAdapter<Date> _dateDeletionAdapter;
+
+  @override
+  Stream<Date> subscribe(int id) {
+    return _queryAdapter.queryStream('SELECT * FROM date WHERE id = ?',
+        arguments: <dynamic>[id],
+        queryableName: 'date',
+        isView: false,
+        mapper: _dateMapper);
+  }
+
+  @override
+  Stream<List<Date>> subscribeAll() {
+    return _queryAdapter.queryListStream('SELECT * FROM date',
+        queryableName: 'date', isView: false, mapper: _dateMapper);
+  }
+
+  @override
+  Stream<List<Date>> subscribeAllForUser(int personId) {
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM date WHERE person_id = ?',
+        arguments: <dynamic>[personId],
+        queryableName: 'date',
+        isView: false,
+        mapper: _dateMapper);
+  }
+
+  @override
+  Future<int> insert(Date object) {
+    return _dateInsertionAdapter.insertAndReturnId(
+        object, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> update(Date object) async {
+    await _dateUpdateAdapter.update(object, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> delete(Date object) async {
+    await _dateDeletionAdapter.delete(object);
   }
 }

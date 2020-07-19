@@ -12,8 +12,8 @@ abstract class NoteDao extends Dao<Note> {
   @floor.Query('SELECT * FROM note')
   Stream<List<Note>> subscribeAll();
 
-  @floor.Query('SELECT * FROM note WHERE person_id = :userId')
-  Stream<List<Note>> subscribeAllForUser(int userId);
+  @floor.Query('SELECT * FROM note WHERE person_id = :personId')
+  Stream<List<Note>> subscribeAllForUser(int personId);
 }
 
 mixin NoteDaoMixin {
