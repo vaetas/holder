@@ -38,6 +38,7 @@ class DateAddBloc extends Bloc<DateAddEvent, DateAddState>
         dateIso8601: dateTime.toIso8601String(),
       );
       await dateDao.insert(date);
+      yield const DateAddState.success();
     } catch (e) {
       log(e);
       yield const DateAddState.error('Internal error');
