@@ -23,6 +23,9 @@ class HolderApp extends StatelessWidget {
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Color(0xFF607D8B),
           ),
+          pageTransitionsTheme: PageTransitionsTheme(builders: {
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          }),
         ),
         routes: {
           HomeScreen.route: (_) => HomeScreen(),
