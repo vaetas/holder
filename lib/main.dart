@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:holder/bloc/bloc_app.dart';
 import 'package:holder/ui/home/home_screen.dart';
 import 'package:holder/ui/person/create_person_screen.dart';
+import 'package:holder/ui/root/root.dart';
 import 'package:holder/util/locator.dart';
 
 Future<void> main() async {
@@ -15,7 +16,7 @@ class HolderApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocApp(
       child: MaterialApp(
-        home: HomeScreen(),
+        home: Root(),
         theme: ThemeData.light().copyWith(
           appBarTheme: AppBarTheme(
             color: Color(0xFF607D8B),
