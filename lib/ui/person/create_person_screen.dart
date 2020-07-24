@@ -47,14 +47,12 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
         ],
       ),
       body: BlocConsumer<CreatePersonBloc, CreatePersonState>(
-        bloc: createPersonBloc,
+        cubit: createPersonBloc,
         listener: (context, state) {
           state.maybeWhen(
             error: (description) {
               Scaffold.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(description),
-                ),
+                SnackBar(content: Text(description)),
               );
             },
             success: () {

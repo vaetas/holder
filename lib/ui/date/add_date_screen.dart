@@ -49,7 +49,7 @@ class _AddDateScreenState extends State<AddDateScreen> with DateDaoMixin {
         ],
       ),
       body: BlocConsumer<DateAddBloc, DateAddState>(
-        bloc: dateAddBloc,
+        cubit: dateAddBloc,
         listener: (context, state) {
           state.maybeWhen(
             success: () {

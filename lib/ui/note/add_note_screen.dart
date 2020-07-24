@@ -43,7 +43,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         ],
       ),
       body: BlocConsumer<NoteAddBloc, NoteAddState>(
-        bloc: noteAddBloc,
+        cubit: noteAddBloc,
         listener: (context, state) {
           state.maybeWhen(
             success: () {
