@@ -1,59 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holder/bloc/person_list/bloc.dart';
-import 'package:holder/model/person.dart';
+import 'package:holder/ui/home/search.dart';
 import 'package:holder/ui/person/create_person_screen.dart';
 import 'package:holder/ui/person/person_screen.dart';
 import 'package:holder/ui/person/person_tile.dart';
-
-class PersonListSearchDelegate extends SearchDelegate {
-  final List<Person> people;
-
-  PersonListSearchDelegate(this.people);
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {
-          query = '';
-        },
-        tooltip: 'Clear',
-      ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return BackButton();
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final filtered = people
-        .where((e) => e.fullName.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final person = filtered[index];
-        return ListTile(
-          title: Text(person.fullName),
-          onTap: () {
-            close(context, person.id);
-          },
-        );
-      },
-      itemCount: filtered.length,
-    );
-  }
-}
 
 class HomeScreen extends StatelessWidget {
   static const route = '/home';
@@ -95,8 +46,9 @@ class HomeScreen extends StatelessWidget {
               ),
               body: ListView.builder(
                 itemBuilder: (context, index) {
+                  final person = people[index];
                   return PersonTile(
-                    person: people[index],
+                    person: person,
                   );
                 },
                 itemCount: people.length,
