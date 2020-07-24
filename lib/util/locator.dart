@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:holder/util/database.dart';
 import 'package:injectable/injectable.dart';
 
-import 'locator.iconfig.dart';
+import 'locator.config.dart';
 
 final locator = GetIt.instance;
 

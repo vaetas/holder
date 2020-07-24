@@ -1,57 +1,93 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holder/bloc/person/bloc.dart';
+import 'package:holder/bloc/person/person_event.dart';
+import 'package:holder/dao/date_dao.dart';
+import 'package:holder/dao/note_dao.dart';
+import 'package:holder/dao/person_dao.dart';
+import 'package:holder/model/date.dart';
 import 'package:holder/model/note.dart';
 import 'package:holder/model/person.dart';
-import 'package:holder/util/database.dart';
-import 'package:holder/util/locator.dart';
+import 'package:holder/util/log.dart';
+import 'package:rxdart/rxdart.dart';
 
-class PersonBloc extends Bloc<PersonEvent, PersonState> {
+@immutable
+class PersonData {
+  final Person person;
+  final List<Note> notes;
+  final List<Date> dates;
+
+  PersonData({
+    this.person,
+    this.notes,
+    this.dates,
+  });
+
+  @override
+  String toString() =>
+      'PersonData{person: $person, notes: $notes, dates: $dates}';
+}
+
+class PersonBloc extends Bloc<PersonEvent, PersonState>
+    with LogMixin, PersonDaoMixin, NoteDaoMixin, DateDaoMixin {
   final int id;
+  StreamSubscription _subscription;
 
-  PersonBloc(this.id) : super(const PersonState.inProgress()) {
-    _personDao.subscribe(id).listen((person) {
-      this.add(PersonEvent.personLoaded(person: person));
-    });
-
-    _noteDao.subscribeAllForUser(id).listen((notes) {
-      this.add(PersonEvent.notesLoaded(notes: notes));
-    });
+  PersonBloc(this.id) : super(const PersonState.initial()) {
+    final personStream = personDao.subscribe(id);
+    final noteStream = noteDao.subscribeAllForUser(id);
+    final dateStream = dateDao.subscribeAllForUser(id);
+    _subscription = Rx.combineLatest3(
+      personStream,
+      noteStream,
+      dateStream,
+      (person, notes, dates) =>
+          PersonEvent.loaded(person: person, notes: notes, dates: dates),
+    ).listen((event) => this.add(event));
   }
-
-  final _personDao = locator<AppDatabase>().personDao;
-  final _noteDao = locator<AppDatabase>().noteDao;
 
   @override
   Stream<PersonState> mapEventToState(PersonEvent event) async* {
     yield* event.when(
-      personLoaded: _mapPersonLoaded,
-      notesLoaded: _mapNotesLoaded,
+      loaded: _mapLoaded,
+      deleted: _mapDeleted,
     );
   }
 
-  Stream<PersonState> _mapPersonLoaded(Person person) async* {
-    yield* state.maybeMap(
-      initial: (_) async* {
-        yield PersonState.success(
-          person: person,
-          notes: [],
-        );
-      },
-      success: (value) async* {
-        yield value.copyWith(
-          person: person,
-        );
+  Stream<PersonState> _mapLoaded(
+    Person person,
+    List<Note> notes,
+    List<Date> dates,
+  ) async* {
+    yield PersonState.success(
+      person: person,
+      notes: notes,
+      dates: dates,
+    );
+  }
+
+  Stream<PersonState> _mapDeleted() async* {
+    yield* state.maybeWhen(
+      success: (person, notes, dates) async* {
+        try {
+          await noteDao.deleteAllForUser(notes);
+          await dateDao.deleteAllForUser(dates);
+          await personDao.delete(person);
+
+          yield const PersonState.deleted();
+        } catch (e) {
+          log('Failed to delete person', error: e);
+        }
       },
       orElse: () async* {},
     );
   }
 
-  Stream<PersonState> _mapNotesLoaded(List<Note> notes) async* {
-    yield* state.maybeMap(
-      initial: (_) async* {
-        yield PersonState.success();
-      },
-      orElse: () async* {},
-    );
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }

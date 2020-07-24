@@ -13,17 +13,18 @@ class _$PersonEventTearOff {
   const _$PersonEventTearOff();
 
 // ignore: unused_element
-  _PersonEventPersonLoaded personLoaded({Person person}) {
-    return _PersonEventPersonLoaded(
+  _PersonEventLoaded loaded(
+      {Person person, List<Note> notes, List<Date> dates}) {
+    return _PersonEventLoaded(
       person: person,
+      notes: notes,
+      dates: dates,
     );
   }
 
 // ignore: unused_element
-  _PersonEventNotesLoaded notesLoaded({List<Note> notes}) {
-    return _PersonEventNotesLoaded(
-      notes: notes,
-    );
+  _PersonEventDeleted deleted() {
+    return const _PersonEventDeleted();
   }
 }
 
@@ -33,24 +34,24 @@ const $PersonEvent = _$PersonEventTearOff();
 mixin _$PersonEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result personLoaded(Person person),
-    @required Result notesLoaded(List<Note> notes),
+    @required Result loaded(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result personLoaded(Person person),
-    Result notesLoaded(List<Note> notes),
+    Result loaded(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result personLoaded(_PersonEventPersonLoaded value),
-    @required Result notesLoaded(_PersonEventNotesLoaded value),
+    @required Result loaded(_PersonEventLoaded value),
+    @required Result deleted(_PersonEventDeleted value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result personLoaded(_PersonEventPersonLoaded value),
-    Result notesLoaded(_PersonEventNotesLoaded value),
+    Result loaded(_PersonEventLoaded value),
+    Result deleted(_PersonEventDeleted value),
     @required Result orElse(),
   });
 }
@@ -69,217 +70,108 @@ class _$PersonEventCopyWithImpl<$Res> implements $PersonEventCopyWith<$Res> {
   final $Res Function(PersonEvent) _then;
 }
 
-abstract class _$PersonEventPersonLoadedCopyWith<$Res> {
-  factory _$PersonEventPersonLoadedCopyWith(_PersonEventPersonLoaded value,
-          $Res Function(_PersonEventPersonLoaded) then) =
-      __$PersonEventPersonLoadedCopyWithImpl<$Res>;
-  $Res call({Person person});
+abstract class _$PersonEventLoadedCopyWith<$Res> {
+  factory _$PersonEventLoadedCopyWith(
+          _PersonEventLoaded value, $Res Function(_PersonEventLoaded) then) =
+      __$PersonEventLoadedCopyWithImpl<$Res>;
+  $Res call({Person person, List<Note> notes, List<Date> dates});
 }
 
-class __$PersonEventPersonLoadedCopyWithImpl<$Res>
+class __$PersonEventLoadedCopyWithImpl<$Res>
     extends _$PersonEventCopyWithImpl<$Res>
-    implements _$PersonEventPersonLoadedCopyWith<$Res> {
-  __$PersonEventPersonLoadedCopyWithImpl(_PersonEventPersonLoaded _value,
-      $Res Function(_PersonEventPersonLoaded) _then)
-      : super(_value, (v) => _then(v as _PersonEventPersonLoaded));
+    implements _$PersonEventLoadedCopyWith<$Res> {
+  __$PersonEventLoadedCopyWithImpl(
+      _PersonEventLoaded _value, $Res Function(_PersonEventLoaded) _then)
+      : super(_value, (v) => _then(v as _PersonEventLoaded));
 
   @override
-  _PersonEventPersonLoaded get _value =>
-      super._value as _PersonEventPersonLoaded;
+  _PersonEventLoaded get _value => super._value as _PersonEventLoaded;
 
   @override
   $Res call({
     Object person = freezed,
+    Object notes = freezed,
+    Object dates = freezed,
   }) {
-    return _then(_PersonEventPersonLoaded(
+    return _then(_PersonEventLoaded(
       person: person == freezed ? _value.person : person as Person,
+      notes: notes == freezed ? _value.notes : notes as List<Note>,
+      dates: dates == freezed ? _value.dates : dates as List<Date>,
     ));
   }
 }
 
-class _$_PersonEventPersonLoaded
+class _$_PersonEventLoaded
     with DiagnosticableTreeMixin
-    implements _PersonEventPersonLoaded {
-  const _$_PersonEventPersonLoaded({this.person});
+    implements _PersonEventLoaded {
+  const _$_PersonEventLoaded({this.person, this.notes, this.dates});
 
   @override
   final Person person;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PersonEvent.personLoaded(person: $person)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PersonEvent.personLoaded'))
-      ..add(DiagnosticsProperty('person', person));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _PersonEventPersonLoaded &&
-            (identical(other.person, person) ||
-                const DeepCollectionEquality().equals(other.person, person)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(person);
-
-  @override
-  _$PersonEventPersonLoadedCopyWith<_PersonEventPersonLoaded> get copyWith =>
-      __$PersonEventPersonLoadedCopyWithImpl<_PersonEventPersonLoaded>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result personLoaded(Person person),
-    @required Result notesLoaded(List<Note> notes),
-  }) {
-    assert(personLoaded != null);
-    assert(notesLoaded != null);
-    return personLoaded(person);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result personLoaded(Person person),
-    Result notesLoaded(List<Note> notes),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (personLoaded != null) {
-      return personLoaded(person);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result personLoaded(_PersonEventPersonLoaded value),
-    @required Result notesLoaded(_PersonEventNotesLoaded value),
-  }) {
-    assert(personLoaded != null);
-    assert(notesLoaded != null);
-    return personLoaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result personLoaded(_PersonEventPersonLoaded value),
-    Result notesLoaded(_PersonEventNotesLoaded value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (personLoaded != null) {
-      return personLoaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _PersonEventPersonLoaded implements PersonEvent {
-  const factory _PersonEventPersonLoaded({Person person}) =
-      _$_PersonEventPersonLoaded;
-
-  Person get person;
-  _$PersonEventPersonLoadedCopyWith<_PersonEventPersonLoaded> get copyWith;
-}
-
-abstract class _$PersonEventNotesLoadedCopyWith<$Res> {
-  factory _$PersonEventNotesLoadedCopyWith(_PersonEventNotesLoaded value,
-          $Res Function(_PersonEventNotesLoaded) then) =
-      __$PersonEventNotesLoadedCopyWithImpl<$Res>;
-  $Res call({List<Note> notes});
-}
-
-class __$PersonEventNotesLoadedCopyWithImpl<$Res>
-    extends _$PersonEventCopyWithImpl<$Res>
-    implements _$PersonEventNotesLoadedCopyWith<$Res> {
-  __$PersonEventNotesLoadedCopyWithImpl(_PersonEventNotesLoaded _value,
-      $Res Function(_PersonEventNotesLoaded) _then)
-      : super(_value, (v) => _then(v as _PersonEventNotesLoaded));
-
-  @override
-  _PersonEventNotesLoaded get _value => super._value as _PersonEventNotesLoaded;
-
-  @override
-  $Res call({
-    Object notes = freezed,
-  }) {
-    return _then(_PersonEventNotesLoaded(
-      notes: notes == freezed ? _value.notes : notes as List<Note>,
-    ));
-  }
-}
-
-class _$_PersonEventNotesLoaded
-    with DiagnosticableTreeMixin
-    implements _PersonEventNotesLoaded {
-  const _$_PersonEventNotesLoaded({this.notes});
-
   @override
   final List<Note> notes;
+  @override
+  final List<Date> dates;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PersonEvent.notesLoaded(notes: $notes)';
+    return 'PersonEvent.loaded(person: $person, notes: $notes, dates: $dates)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'PersonEvent.notesLoaded'))
-      ..add(DiagnosticsProperty('notes', notes));
+      ..add(DiagnosticsProperty('type', 'PersonEvent.loaded'))
+      ..add(DiagnosticsProperty('person', person))
+      ..add(DiagnosticsProperty('notes', notes))
+      ..add(DiagnosticsProperty('dates', dates));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PersonEventNotesLoaded &&
+        (other is _PersonEventLoaded &&
+            (identical(other.person, person) ||
+                const DeepCollectionEquality().equals(other.person, person)) &&
             (identical(other.notes, notes) ||
-                const DeepCollectionEquality().equals(other.notes, notes)));
+                const DeepCollectionEquality().equals(other.notes, notes)) &&
+            (identical(other.dates, dates) ||
+                const DeepCollectionEquality().equals(other.dates, dates)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(notes);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(person) ^
+      const DeepCollectionEquality().hash(notes) ^
+      const DeepCollectionEquality().hash(dates);
 
   @override
-  _$PersonEventNotesLoadedCopyWith<_PersonEventNotesLoaded> get copyWith =>
-      __$PersonEventNotesLoadedCopyWithImpl<_PersonEventNotesLoaded>(
-          this, _$identity);
+  _$PersonEventLoadedCopyWith<_PersonEventLoaded> get copyWith =>
+      __$PersonEventLoadedCopyWithImpl<_PersonEventLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result personLoaded(Person person),
-    @required Result notesLoaded(List<Note> notes),
+    @required Result loaded(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
   }) {
-    assert(personLoaded != null);
-    assert(notesLoaded != null);
-    return notesLoaded(notes);
+    assert(loaded != null);
+    assert(deleted != null);
+    return loaded(person, notes, dates);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result personLoaded(Person person),
-    Result notesLoaded(List<Note> notes),
+    Result loaded(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (notesLoaded != null) {
-      return notesLoaded(notes);
+    if (loaded != null) {
+      return loaded(person, notes, dates);
     }
     return orElse();
   }
@@ -287,33 +179,133 @@ class _$_PersonEventNotesLoaded
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result personLoaded(_PersonEventPersonLoaded value),
-    @required Result notesLoaded(_PersonEventNotesLoaded value),
+    @required Result loaded(_PersonEventLoaded value),
+    @required Result deleted(_PersonEventDeleted value),
   }) {
-    assert(personLoaded != null);
-    assert(notesLoaded != null);
-    return notesLoaded(this);
+    assert(loaded != null);
+    assert(deleted != null);
+    return loaded(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result personLoaded(_PersonEventPersonLoaded value),
-    Result notesLoaded(_PersonEventNotesLoaded value),
+    Result loaded(_PersonEventLoaded value),
+    Result deleted(_PersonEventDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (notesLoaded != null) {
-      return notesLoaded(this);
+    if (loaded != null) {
+      return loaded(this);
     }
     return orElse();
   }
 }
 
-abstract class _PersonEventNotesLoaded implements PersonEvent {
-  const factory _PersonEventNotesLoaded({List<Note> notes}) =
-      _$_PersonEventNotesLoaded;
+abstract class _PersonEventLoaded implements PersonEvent {
+  const factory _PersonEventLoaded(
+      {Person person,
+      List<Note> notes,
+      List<Date> dates}) = _$_PersonEventLoaded;
 
+  Person get person;
   List<Note> get notes;
-  _$PersonEventNotesLoadedCopyWith<_PersonEventNotesLoaded> get copyWith;
+  List<Date> get dates;
+  _$PersonEventLoadedCopyWith<_PersonEventLoaded> get copyWith;
+}
+
+abstract class _$PersonEventDeletedCopyWith<$Res> {
+  factory _$PersonEventDeletedCopyWith(
+          _PersonEventDeleted value, $Res Function(_PersonEventDeleted) then) =
+      __$PersonEventDeletedCopyWithImpl<$Res>;
+}
+
+class __$PersonEventDeletedCopyWithImpl<$Res>
+    extends _$PersonEventCopyWithImpl<$Res>
+    implements _$PersonEventDeletedCopyWith<$Res> {
+  __$PersonEventDeletedCopyWithImpl(
+      _PersonEventDeleted _value, $Res Function(_PersonEventDeleted) _then)
+      : super(_value, (v) => _then(v as _PersonEventDeleted));
+
+  @override
+  _PersonEventDeleted get _value => super._value as _PersonEventDeleted;
+}
+
+class _$_PersonEventDeleted
+    with DiagnosticableTreeMixin
+    implements _PersonEventDeleted {
+  const _$_PersonEventDeleted();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PersonEvent.deleted()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'PersonEvent.deleted'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _PersonEventDeleted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result loaded(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
+  }) {
+    assert(loaded != null);
+    assert(deleted != null);
+    return deleted();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result loaded(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (deleted != null) {
+      return deleted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result loaded(_PersonEventLoaded value),
+    @required Result deleted(_PersonEventDeleted value),
+  }) {
+    assert(loaded != null);
+    assert(deleted != null);
+    return deleted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result loaded(_PersonEventLoaded value),
+    Result deleted(_PersonEventDeleted value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (deleted != null) {
+      return deleted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PersonEventDeleted implements PersonEvent {
+  const factory _PersonEventDeleted() = _$_PersonEventDeleted;
 }

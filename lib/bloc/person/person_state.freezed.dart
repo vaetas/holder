@@ -13,21 +13,23 @@ class _$PersonStateTearOff {
   const _$PersonStateTearOff();
 
 // ignore: unused_element
-  PersonStateInitial initial() {
-    return const PersonStateInitial();
+  _PersonStateInitial initial() {
+    return const _PersonStateInitial();
   }
 
 // ignore: unused_element
-  PersonStateSuccess success({Person person, List<Note> notes}) {
-    return PersonStateSuccess(
+  _PersonStateSuccess success(
+      {Person person, List<Note> notes, List<Date> dates}) {
+    return _PersonStateSuccess(
       person: person,
       notes: notes,
+      dates: dates,
     );
   }
 
 // ignore: unused_element
-  PersonStateInProgress inProgress() {
-    return const PersonStateInProgress();
+  _PersonStateDeleted deleted() {
+    return const _PersonStateDeleted();
   }
 }
 
@@ -38,27 +40,27 @@ mixin _$PersonState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(Person person, List<Note> notes),
-    @required Result inProgress(),
+    @required Result success(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(Person person, List<Note> notes),
-    Result inProgress(),
+    Result success(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(PersonStateInitial value),
-    @required Result success(PersonStateSuccess value),
-    @required Result inProgress(PersonStateInProgress value),
+    @required Result initial(_PersonStateInitial value),
+    @required Result success(_PersonStateSuccess value),
+    @required Result deleted(_PersonStateDeleted value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(PersonStateInitial value),
-    Result success(PersonStateSuccess value),
-    Result inProgress(PersonStateInProgress value),
+    Result initial(_PersonStateInitial value),
+    Result success(_PersonStateSuccess value),
+    Result deleted(_PersonStateDeleted value),
     @required Result orElse(),
   });
 }
@@ -77,27 +79,27 @@ class _$PersonStateCopyWithImpl<$Res> implements $PersonStateCopyWith<$Res> {
   final $Res Function(PersonState) _then;
 }
 
-abstract class $PersonStateInitialCopyWith<$Res> {
-  factory $PersonStateInitialCopyWith(
-          PersonStateInitial value, $Res Function(PersonStateInitial) then) =
-      _$PersonStateInitialCopyWithImpl<$Res>;
+abstract class _$PersonStateInitialCopyWith<$Res> {
+  factory _$PersonStateInitialCopyWith(
+          _PersonStateInitial value, $Res Function(_PersonStateInitial) then) =
+      __$PersonStateInitialCopyWithImpl<$Res>;
 }
 
-class _$PersonStateInitialCopyWithImpl<$Res>
+class __$PersonStateInitialCopyWithImpl<$Res>
     extends _$PersonStateCopyWithImpl<$Res>
-    implements $PersonStateInitialCopyWith<$Res> {
-  _$PersonStateInitialCopyWithImpl(
-      PersonStateInitial _value, $Res Function(PersonStateInitial) _then)
-      : super(_value, (v) => _then(v as PersonStateInitial));
+    implements _$PersonStateInitialCopyWith<$Res> {
+  __$PersonStateInitialCopyWithImpl(
+      _PersonStateInitial _value, $Res Function(_PersonStateInitial) _then)
+      : super(_value, (v) => _then(v as _PersonStateInitial));
 
   @override
-  PersonStateInitial get _value => super._value as PersonStateInitial;
+  _PersonStateInitial get _value => super._value as _PersonStateInitial;
 }
 
-class _$PersonStateInitial
+class _$_PersonStateInitial
     with DiagnosticableTreeMixin
-    implements PersonStateInitial {
-  const _$PersonStateInitial();
+    implements _PersonStateInitial {
+  const _$_PersonStateInitial();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -112,7 +114,7 @@ class _$PersonStateInitial
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is PersonStateInitial);
+    return identical(this, other) || (other is _PersonStateInitial);
   }
 
   @override
@@ -122,12 +124,12 @@ class _$PersonStateInitial
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(Person person, List<Note> notes),
-    @required Result inProgress(),
+    @required Result success(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
   }) {
     assert(initial != null);
     assert(success != null);
-    assert(inProgress != null);
+    assert(deleted != null);
     return initial();
   }
 
@@ -135,8 +137,8 @@ class _$PersonStateInitial
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(Person person, List<Note> notes),
-    Result inProgress(),
+    Result success(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -149,22 +151,22 @@ class _$PersonStateInitial
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(PersonStateInitial value),
-    @required Result success(PersonStateSuccess value),
-    @required Result inProgress(PersonStateInProgress value),
+    @required Result initial(_PersonStateInitial value),
+    @required Result success(_PersonStateSuccess value),
+    @required Result deleted(_PersonStateDeleted value),
   }) {
     assert(initial != null);
     assert(success != null);
-    assert(inProgress != null);
+    assert(deleted != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(PersonStateInitial value),
-    Result success(PersonStateSuccess value),
-    Result inProgress(PersonStateInProgress value),
+    Result initial(_PersonStateInitial value),
+    Result success(_PersonStateSuccess value),
+    Result deleted(_PersonStateDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -175,52 +177,56 @@ class _$PersonStateInitial
   }
 }
 
-abstract class PersonStateInitial implements PersonState {
-  const factory PersonStateInitial() = _$PersonStateInitial;
+abstract class _PersonStateInitial implements PersonState {
+  const factory _PersonStateInitial() = _$_PersonStateInitial;
 }
 
-abstract class $PersonStateSuccessCopyWith<$Res> {
-  factory $PersonStateSuccessCopyWith(
-          PersonStateSuccess value, $Res Function(PersonStateSuccess) then) =
-      _$PersonStateSuccessCopyWithImpl<$Res>;
-  $Res call({Person person, List<Note> notes});
+abstract class _$PersonStateSuccessCopyWith<$Res> {
+  factory _$PersonStateSuccessCopyWith(
+          _PersonStateSuccess value, $Res Function(_PersonStateSuccess) then) =
+      __$PersonStateSuccessCopyWithImpl<$Res>;
+  $Res call({Person person, List<Note> notes, List<Date> dates});
 }
 
-class _$PersonStateSuccessCopyWithImpl<$Res>
+class __$PersonStateSuccessCopyWithImpl<$Res>
     extends _$PersonStateCopyWithImpl<$Res>
-    implements $PersonStateSuccessCopyWith<$Res> {
-  _$PersonStateSuccessCopyWithImpl(
-      PersonStateSuccess _value, $Res Function(PersonStateSuccess) _then)
-      : super(_value, (v) => _then(v as PersonStateSuccess));
+    implements _$PersonStateSuccessCopyWith<$Res> {
+  __$PersonStateSuccessCopyWithImpl(
+      _PersonStateSuccess _value, $Res Function(_PersonStateSuccess) _then)
+      : super(_value, (v) => _then(v as _PersonStateSuccess));
 
   @override
-  PersonStateSuccess get _value => super._value as PersonStateSuccess;
+  _PersonStateSuccess get _value => super._value as _PersonStateSuccess;
 
   @override
   $Res call({
     Object person = freezed,
     Object notes = freezed,
+    Object dates = freezed,
   }) {
-    return _then(PersonStateSuccess(
+    return _then(_PersonStateSuccess(
       person: person == freezed ? _value.person : person as Person,
       notes: notes == freezed ? _value.notes : notes as List<Note>,
+      dates: dates == freezed ? _value.dates : dates as List<Date>,
     ));
   }
 }
 
-class _$PersonStateSuccess
+class _$_PersonStateSuccess
     with DiagnosticableTreeMixin
-    implements PersonStateSuccess {
-  const _$PersonStateSuccess({this.person, this.notes});
+    implements _PersonStateSuccess {
+  const _$_PersonStateSuccess({this.person, this.notes, this.dates});
 
   @override
   final Person person;
   @override
   final List<Note> notes;
+  @override
+  final List<Date> dates;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PersonState.success(person: $person, notes: $notes)';
+    return 'PersonState.success(person: $person, notes: $notes, dates: $dates)';
   }
 
   @override
@@ -229,53 +235,57 @@ class _$PersonStateSuccess
     properties
       ..add(DiagnosticsProperty('type', 'PersonState.success'))
       ..add(DiagnosticsProperty('person', person))
-      ..add(DiagnosticsProperty('notes', notes));
+      ..add(DiagnosticsProperty('notes', notes))
+      ..add(DiagnosticsProperty('dates', dates));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is PersonStateSuccess &&
+        (other is _PersonStateSuccess &&
             (identical(other.person, person) ||
                 const DeepCollectionEquality().equals(other.person, person)) &&
             (identical(other.notes, notes) ||
-                const DeepCollectionEquality().equals(other.notes, notes)));
+                const DeepCollectionEquality().equals(other.notes, notes)) &&
+            (identical(other.dates, dates) ||
+                const DeepCollectionEquality().equals(other.dates, dates)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(person) ^
-      const DeepCollectionEquality().hash(notes);
+      const DeepCollectionEquality().hash(notes) ^
+      const DeepCollectionEquality().hash(dates);
 
   @override
-  $PersonStateSuccessCopyWith<PersonStateSuccess> get copyWith =>
-      _$PersonStateSuccessCopyWithImpl<PersonStateSuccess>(this, _$identity);
+  _$PersonStateSuccessCopyWith<_PersonStateSuccess> get copyWith =>
+      __$PersonStateSuccessCopyWithImpl<_PersonStateSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(Person person, List<Note> notes),
-    @required Result inProgress(),
+    @required Result success(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
   }) {
     assert(initial != null);
     assert(success != null);
-    assert(inProgress != null);
-    return success(person, notes);
+    assert(deleted != null);
+    return success(person, notes, dates);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(Person person, List<Note> notes),
-    Result inProgress(),
+    Result success(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (success != null) {
-      return success(person, notes);
+      return success(person, notes, dates);
     }
     return orElse();
   }
@@ -283,22 +293,22 @@ class _$PersonStateSuccess
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(PersonStateInitial value),
-    @required Result success(PersonStateSuccess value),
-    @required Result inProgress(PersonStateInProgress value),
+    @required Result initial(_PersonStateInitial value),
+    @required Result success(_PersonStateSuccess value),
+    @required Result deleted(_PersonStateDeleted value),
   }) {
     assert(initial != null);
     assert(success != null);
-    assert(inProgress != null);
+    assert(deleted != null);
     return success(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(PersonStateInitial value),
-    Result success(PersonStateSuccess value),
-    Result inProgress(PersonStateInProgress value),
+    Result initial(_PersonStateInitial value),
+    Result success(_PersonStateSuccess value),
+    Result deleted(_PersonStateDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -309,51 +319,54 @@ class _$PersonStateSuccess
   }
 }
 
-abstract class PersonStateSuccess implements PersonState {
-  const factory PersonStateSuccess({Person person, List<Note> notes}) =
-      _$PersonStateSuccess;
+abstract class _PersonStateSuccess implements PersonState {
+  const factory _PersonStateSuccess(
+      {Person person,
+      List<Note> notes,
+      List<Date> dates}) = _$_PersonStateSuccess;
 
   Person get person;
   List<Note> get notes;
-  $PersonStateSuccessCopyWith<PersonStateSuccess> get copyWith;
+  List<Date> get dates;
+  _$PersonStateSuccessCopyWith<_PersonStateSuccess> get copyWith;
 }
 
-abstract class $PersonStateInProgressCopyWith<$Res> {
-  factory $PersonStateInProgressCopyWith(PersonStateInProgress value,
-          $Res Function(PersonStateInProgress) then) =
-      _$PersonStateInProgressCopyWithImpl<$Res>;
+abstract class _$PersonStateDeletedCopyWith<$Res> {
+  factory _$PersonStateDeletedCopyWith(
+          _PersonStateDeleted value, $Res Function(_PersonStateDeleted) then) =
+      __$PersonStateDeletedCopyWithImpl<$Res>;
 }
 
-class _$PersonStateInProgressCopyWithImpl<$Res>
+class __$PersonStateDeletedCopyWithImpl<$Res>
     extends _$PersonStateCopyWithImpl<$Res>
-    implements $PersonStateInProgressCopyWith<$Res> {
-  _$PersonStateInProgressCopyWithImpl(
-      PersonStateInProgress _value, $Res Function(PersonStateInProgress) _then)
-      : super(_value, (v) => _then(v as PersonStateInProgress));
+    implements _$PersonStateDeletedCopyWith<$Res> {
+  __$PersonStateDeletedCopyWithImpl(
+      _PersonStateDeleted _value, $Res Function(_PersonStateDeleted) _then)
+      : super(_value, (v) => _then(v as _PersonStateDeleted));
 
   @override
-  PersonStateInProgress get _value => super._value as PersonStateInProgress;
+  _PersonStateDeleted get _value => super._value as _PersonStateDeleted;
 }
 
-class _$PersonStateInProgress
+class _$_PersonStateDeleted
     with DiagnosticableTreeMixin
-    implements PersonStateInProgress {
-  const _$PersonStateInProgress();
+    implements _PersonStateDeleted {
+  const _$_PersonStateDeleted();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PersonState.inProgress()';
+    return 'PersonState.deleted()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'PersonState.inProgress'));
+    properties..add(DiagnosticsProperty('type', 'PersonState.deleted'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is PersonStateInProgress);
+    return identical(this, other) || (other is _PersonStateDeleted);
   }
 
   @override
@@ -363,26 +376,26 @@ class _$PersonStateInProgress
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result success(Person person, List<Note> notes),
-    @required Result inProgress(),
+    @required Result success(Person person, List<Note> notes, List<Date> dates),
+    @required Result deleted(),
   }) {
     assert(initial != null);
     assert(success != null);
-    assert(inProgress != null);
-    return inProgress();
+    assert(deleted != null);
+    return deleted();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result success(Person person, List<Note> notes),
-    Result inProgress(),
+    Result success(Person person, List<Note> notes, List<Date> dates),
+    Result deleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (inProgress != null) {
-      return inProgress();
+    if (deleted != null) {
+      return deleted();
     }
     return orElse();
   }
@@ -390,32 +403,32 @@ class _$PersonStateInProgress
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(PersonStateInitial value),
-    @required Result success(PersonStateSuccess value),
-    @required Result inProgress(PersonStateInProgress value),
+    @required Result initial(_PersonStateInitial value),
+    @required Result success(_PersonStateSuccess value),
+    @required Result deleted(_PersonStateDeleted value),
   }) {
     assert(initial != null);
     assert(success != null);
-    assert(inProgress != null);
-    return inProgress(this);
+    assert(deleted != null);
+    return deleted(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(PersonStateInitial value),
-    Result success(PersonStateSuccess value),
-    Result inProgress(PersonStateInProgress value),
+    Result initial(_PersonStateInitial value),
+    Result success(_PersonStateSuccess value),
+    Result deleted(_PersonStateDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (inProgress != null) {
-      return inProgress(this);
+    if (deleted != null) {
+      return deleted(this);
     }
     return orElse();
   }
 }
 
-abstract class PersonStateInProgress implements PersonState {
-  const factory PersonStateInProgress() = _$PersonStateInProgress;
+abstract class _PersonStateDeleted implements PersonState {
+  const factory _PersonStateDeleted() = _$_PersonStateDeleted;
 }

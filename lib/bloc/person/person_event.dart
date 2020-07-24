@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:holder/model/date.dart';
 import 'package:holder/model/note.dart';
 import 'package:holder/model/person.dart';
 
@@ -7,11 +8,11 @@ part 'person_event.freezed.dart';
 
 @freezed
 abstract class PersonEvent with _$PersonEvent {
-  const factory PersonEvent.personLoaded({
+  const factory PersonEvent.loaded({
     Person person,
-  }) = _PersonEventPersonLoaded;
-
-  const factory PersonEvent.notesLoaded({
     List<Note> notes,
-  }) = _PersonEventNotesLoaded;
+    List<Date> dates,
+  }) = _PersonEventLoaded;
+
+  const factory PersonEvent.deleted() = _PersonEventDeleted;
 }

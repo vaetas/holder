@@ -14,6 +14,9 @@ abstract class NoteDao extends Dao<Note> {
 
   @floor.Query('SELECT * FROM note WHERE person_id = :personId')
   Stream<List<Note>> subscribeAllForUser(int personId);
+
+  @floor.delete
+  Future<void> deleteAllForUser(List<Note> notes);
 }
 
 mixin NoteDaoMixin {

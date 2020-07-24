@@ -14,6 +14,9 @@ abstract class DateDao extends Dao<Date> {
 
   @floor.Query('SELECT * FROM date WHERE person_id = :personId')
   Stream<List<Date>> subscribeAllForUser(int personId);
+
+  @floor.delete
+  Future<void> deleteAllForUser(List<Date> dates);
 }
 
 mixin DateDaoMixin {

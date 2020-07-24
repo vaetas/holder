@@ -5,12 +5,12 @@ import 'package:holder/util/extension.dart';
 class DateTile extends StatelessWidget {
   final Date date;
 
-  DateTile({this.date});
+  DateTile({Key key, this.date}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

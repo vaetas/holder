@@ -285,6 +285,11 @@ class _$NoteDao extends NoteDao {
   }
 
   @override
+  Future<void> deleteAllForUser(List<Note> notes) async {
+    await _noteDeletionAdapter.deleteList(notes);
+  }
+
+  @override
   Future<void> delete(Note object) async {
     await _noteDeletionAdapter.delete(object);
   }
@@ -378,6 +383,11 @@ class _$DateDao extends DateDao {
   @override
   Future<void> update(Date object) async {
     await _dateUpdateAdapter.update(object, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteAllForUser(List<Date> dates) async {
+    await _dateDeletionAdapter.deleteList(dates);
   }
 
   @override
