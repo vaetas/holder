@@ -19,10 +19,10 @@ class HolderApp extends StatelessWidget {
         home: Root(),
         theme: ThemeData.light().copyWith(
           appBarTheme: AppBarTheme(
-            color: Color(0xFF607D8B),
+            color: const Color(0xFF607D8B),
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Color(0xFF607D8B),
+            backgroundColor: const Color(0xFF607D8B),
           ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {
             TargetPlatform.android: ZoomPageTransitionsBuilder(),

@@ -20,21 +20,17 @@ class PersonListSearchDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildLeading(BuildContext context) {
-    return BackButton();
-  }
+  Widget buildLeading(BuildContext context) => BackButton();
 
   @override
-  Widget buildResults(BuildContext context) {
-    return Container();
-  }
+  Widget buildResults(BuildContext context) => buildSuggestions(context);
+
+  List<Person> get filtered => people
+      .where((e) => e.fullName.toLowerCase().contains(query.toLowerCase()))
+      .toList();
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final filtered = people
-        .where((e) => e.fullName.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-
     return ListView.builder(
       itemBuilder: (context, index) {
         final person = filtered[index];
