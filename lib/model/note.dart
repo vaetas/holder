@@ -26,4 +26,16 @@ class Note {
   String toString() {
     return 'Note{id: $id, personId: $personId, content: $content}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Note &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          personId == other.personId &&
+          content == other.content;
+
+  @override
+  int get hashCode => id.hashCode ^ personId.hashCode ^ content.hashCode;
 }
