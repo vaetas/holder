@@ -70,9 +70,10 @@ class _AddDateScreenState extends State<AddDateScreen> with DateDaoMixin {
               children: <Widget>[
                 TextField(
                   controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                  ),
+                  autofocus: true,
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(labelText: 'Name'),
                 ),
                 FlatButton.icon(
                   icon: Icon(Icons.date_range),

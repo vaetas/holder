@@ -68,29 +68,21 @@ class _CreatePersonScreenState extends State<CreatePersonScreen> {
               children: <Widget>[
                 TextField(
                   controller: firstNameController,
-                  decoration: InputDecoration(
-                    labelText: 'First name',
-                  ),
+                  decoration: InputDecoration(labelText: 'First name'),
                   textInputAction: TextInputAction.next,
-                  onEditingComplete: () {
-                    FocusScope.of(context).nextFocus();
-                  },
+                  onEditingComplete: () => FocusScope.of(context).nextFocus(),
                   textCapitalization: TextCapitalization.words,
                 ),
                 TextField(
                   controller: lastNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Last name',
-                  ),
+                  decoration: InputDecoration(labelText: 'Last name'),
                   textInputAction: TextInputAction.next,
-                  onEditingComplete: submit,
+                  onEditingComplete: () => FocusScope.of(context).nextFocus(),
                   textCapitalization: TextCapitalization.words,
                 ),
                 TextField(
                   controller: descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                  ),
+                  decoration: InputDecoration(labelText: 'Description'),
                   textInputAction: TextInputAction.done,
                   onEditingComplete: submit,
                   textCapitalization: TextCapitalization.words,

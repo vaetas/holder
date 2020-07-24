@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holder/bloc/note_add/bloc.dart';
@@ -68,9 +69,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     minLines: 1,
                     maxLines: 5,
                     maxLengthEnforced: true,
-                    decoration: InputDecoration(
-                      labelText: 'Content',
-                    ),
+                    textCapitalization: TextCapitalization.sentences,
+                    autofocus: true,
+                    autocorrect: true,
+                    decoration: InputDecoration(labelText: 'Content'),
                   ),
                 ),
               ],
