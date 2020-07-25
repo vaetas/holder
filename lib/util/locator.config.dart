@@ -8,19 +8,27 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:injectable/get_it_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../service/database.dart';
+import '../service/authentication_service.dart';
+import '../service/module.dart';
+import '../service/preferences_service.dart';
 import 'database.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
 
-void $initGetIt(GetIt g, {String environment}) {
+Future<void> $initGetIt(GetIt g, {String environment}) async {
   final gh = GetItHelper(g, environment);
-  final databaseModule = _$DatabaseModule();
+  final registerModule = _$RegisterModule();
+  gh.lazySingleton<AuthenticationService>(() => AuthenticationService());
+  gh.lazySingleton<PreferencesService>(() => PreferencesService());
+  final sharedPreferences = await registerModule.preferences;
+  gh.factory<SharedPreferences>(() => sharedPreferences);
 
   // Eager singletons must be registered in the right order
-  gh.singletonAsync<AppDatabase>(() => databaseModule.database);
+  final appDatabase = await registerModule.database;
+  gh.singleton<AppDatabase>(appDatabase);
 }
 
-class _$DatabaseModule extends DatabaseModule {}
+class _$RegisterModule extends RegisterModule {}
