@@ -12,7 +12,7 @@ class ActionFlatButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

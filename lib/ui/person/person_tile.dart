@@ -31,7 +31,7 @@ class _Avatar extends StatelessWidget {
         shape: BoxShape.circle,
         color: Theme.of(context).primaryColor.withOpacity(0.075),
       ),
-      child: Icon(Icons.person),
+      child: const Icon(Icons.person),
     );
   }
 }

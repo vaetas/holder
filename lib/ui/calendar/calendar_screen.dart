@@ -12,7 +12,7 @@ class CalendarScreen extends StatelessWidget with DateDaoMixin, PersonDaoMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar'),
+        title: const Text('Calendar'),
       ),
       body: StreamBuilder<List<Date>>(
         stream: dateDao.subscribeAll(),
@@ -41,7 +41,7 @@ class CalendarScreen extends StatelessWidget with DateDaoMixin, PersonDaoMixin {
               itemCount: snapshot.data.length,
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

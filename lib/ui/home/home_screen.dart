@@ -16,14 +16,12 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           },
           success: (people) {
             return Scaffold(
               appBar: AppBar(
-                title: Text('Holder'),
+                title: const Text('Holder'),
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.search),
@@ -57,8 +55,8 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(CreatePersonScreen.route);
                 },
-                label: Text('Person'),
-                icon: Icon(Icons.add),
+                label: const Text('Person'),
+                icon: const Icon(Icons.add),
                 tooltip: 'Create new person',
               ),
             );

@@ -35,7 +35,7 @@ class _RootState extends State<Root> {
           });
         },
         currentIndex: currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
             title: Text('People'),

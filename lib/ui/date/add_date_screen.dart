@@ -73,10 +73,10 @@ class _AddDateScreenState extends State<AddDateScreen> with DateDaoMixin {
                   autofocus: true,
                   autocorrect: true,
                   textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(labelText: 'Name'),
                 ),
                 FlatButton.icon(
-                  icon: Icon(Icons.date_range),
+                  icon: const Icon(Icons.date_range),
                   label: dateTime != null
                       ? Text(DateFormat('y/MM/dd').format(dateTime))
                       : Text('Select date'),
