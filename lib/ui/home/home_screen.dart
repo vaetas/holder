@@ -5,8 +5,9 @@ import 'package:holder/ui/home/search.dart';
 import 'package:holder/ui/person/create_person_screen.dart';
 import 'package:holder/ui/person/person_screen.dart';
 import 'package:holder/ui/person/person_tile.dart';
+import 'package:logx/logx.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget with LogMixin {
   static const route = '/home';
 
   @override
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                 title: const Text('Holder'),
                 actions: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     onPressed: () async {
                       final result = await showSearch(
                         context: context,

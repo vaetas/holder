@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:holder/service/authentication_service.dart';
 import 'package:holder/service/preferences_service.dart';
 import 'package:holder/util/locator.dart';
-import 'package:holder/util/log.dart';
+import 'package:logx/logx.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const route = '/settings';
@@ -40,7 +40,6 @@ class _SettingsScreenState extends State<SettingsScreen> with LogMixin {
                     );
 
                     if (success) {
-                      log('Changed to $enabled');
                       preferences.setBool(Preferences.authentication, enabled);
                     } else {
                       Scaffold.of(context).showSnackBar(

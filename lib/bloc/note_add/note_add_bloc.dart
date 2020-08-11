@@ -3,7 +3,7 @@ import 'package:holder/bloc/note_add/bloc.dart';
 import 'package:holder/bloc/note_add/note_add_state.dart';
 import 'package:holder/dao/note_dao.dart';
 import 'package:holder/model/note.dart';
-import 'package:holder/util/log.dart';
+import 'package:logx/logx.dart';
 
 class NoteAddBloc extends Bloc<NoteAddEvent, NoteAddState>
     with NoteDaoMixin, LogMixin {
@@ -35,6 +35,7 @@ class NoteAddBloc extends Bloc<NoteAddEvent, NoteAddState>
       yield const NoteAddState.success();
     } catch (e) {
       yield const NoteAddState.error('Failed to add entry');
+      log('Failed to add entry', error: e);
     }
   }
 

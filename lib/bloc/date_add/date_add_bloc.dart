@@ -3,7 +3,7 @@ import 'package:holder/bloc/date_add/bloc.dart';
 import 'package:holder/bloc/date_add/date_add_state.dart';
 import 'package:holder/dao/date_dao.dart';
 import 'package:holder/model/date.dart';
-import 'package:holder/util/log.dart';
+import 'package:logx/logx.dart';
 
 class DateAddBloc extends Bloc<DateAddEvent, DateAddState>
     with DateDaoMixin, LogMixin {

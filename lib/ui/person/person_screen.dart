@@ -7,7 +7,7 @@ import 'package:holder/dao/person_dao.dart';
 import 'package:holder/ui/date/add_date_screen.dart';
 import 'package:holder/ui/date/date_tile.dart';
 import 'package:holder/ui/note/add_note_screen.dart';
-import 'package:holder/util/log.dart';
+import 'package:logx/logx.dart';
 
 enum _PersonScreenPopupItem {
   delete,

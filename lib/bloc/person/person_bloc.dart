@@ -10,7 +10,7 @@ import 'package:holder/dao/person_dao.dart';
 import 'package:holder/model/date.dart';
 import 'package:holder/model/note.dart';
 import 'package:holder/model/person.dart';
-import 'package:holder/util/log.dart';
+import 'package:logx/logx.dart';
 import 'package:rxdart/rxdart.dart';
 
 @immutable
