@@ -13,10 +13,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^0.1.3
   flutter_bloc: ^6.0.1
-  freezed_annotation: ^0.11.0
+  freezed_annotation: ^0.11.0+1
   rxdart: ^0.24.1
   floor: ^0.14.0
-  injectable: ^1.0.2
+  injectable: ^1.0.4
   get_it: ^4.0.4
   intl: ^0.16.1
   dartx: ^0.5.0
@@ -27,12 +27,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^1.10.0
-  freezed: ^0.11.4
+  freezed: ^0.11.5
   floor_generator: ^0.14.0
-  injectable_generator: ^1.0.2
-
-dependency_overrides:
-  rxdart: ^0.24.1
+  injectable_generator: ^1.0.4
 
 flutter:
   uses-material-design: true
