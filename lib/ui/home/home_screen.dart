@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget with LogMixin {
                       );
 
                       if (result != null && result is int) {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) {
                             return PersonScreen(id: result);
                           },

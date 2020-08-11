@@ -13,7 +13,7 @@ class PersonListBloc extends Bloc<PersonListEvent, PersonListState> {
 
   PersonListBloc() : super(const PersonListState.initial()) {
     _database.personDao.subscribeAll().listen((event) {
-      this.add(PersonListEvent.updated(event));
+      add(PersonListEvent.updated(event));
     });
   }
 

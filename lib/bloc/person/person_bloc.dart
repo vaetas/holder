@@ -45,7 +45,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState>
       dateStream,
       (person, notes, dates) =>
           PersonEvent.loaded(person: person, notes: notes, dates: dates),
-    ).listen((event) => this.add(event));
+    ).listen((event) => add(event));
   }
 
   @override

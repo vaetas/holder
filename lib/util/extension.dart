@@ -9,6 +9,6 @@ extension IterableX<T> on Iterable<T> {
   /// Sort list by DateTime attribute from oldest (lower index) to newest
   /// (higher index).
   List<T> sortByDate(DateTime Function(T item) fn) {
-    return this.sortedBy((e) => fn(e)).toList();
+    return sortedBy((e) => fn(e)).toList();
   }
 }

@@ -40,7 +40,10 @@ class _SettingsScreenState extends State<SettingsScreen> with LogMixin {
                     );
 
                     if (success) {
-                      preferences.setBool(Preferences.authentication, enabled);
+                      await preferences.setBool(
+                        Preferences.authentication,
+                        enabled,
+                      );
                     } else {
                       Scaffold.of(context).showSnackBar(
                         const SnackBar(
